@@ -1,0 +1,33 @@
+{% extends "module1_ui/frontend/base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 0 auto;">
+    <h2>Register</h2>
+    <form method="POST">
+        <label>Username</label>
+        <input type="text" name="username" required>
+        
+        <label>Email</label>
+        <input type="email" name="email" required>
+        
+        <label>Password</label>
+        <input type="password" name="password" required>
+        
+        <label>Academic Level</label>
+        <select name="academic_level">
+            <option value="elementary">Elementary School</option>
+            <option value="middle_school">Middle School</option>
+            <option value="high_school" selected>High School</option>
+            <option value="undergraduate">Undergraduate</option>
+            <option value="graduate">Graduate</option>
+        </select>
+        
+        <button type="submit" class="btn" style="margin-top: 1rem; width: 100%;">Register</button>
+    </form>
+    <p style="margin-top: 1rem; text-align: center;">
+        Already have an account? <a href="{{ url_for('module1.login') }}">Login here</a>
+    </p>
+</div>
+{% endblock %}

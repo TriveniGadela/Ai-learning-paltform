@@ -1,0 +1,28 @@
+{% extends "module1_ui/frontend/base.html" %}
+
+{% block title %}{{ topic.topic_name }} - Explanation{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>{{ topic.topic_name }}</h2>
+    <p><strong>Academic Level:</strong> {{ topic.academic_level.replace('_', ' ').title() }}</p>
+</div>
+
+<div class="card">
+    <h3>AI-Generated Explanation</h3>
+    <div style="line-height: 1.8; white-space: pre-wrap;">{{ topic.explanation }}</div>
+</div>
+
+<div class="card">
+    <h3>Learning Tools</h3>
+    <a href="{{ url_for('module4.text_to_speech', topic_id=topic.id) }}" class="btn">🔊 Listen to Explanation</a>
+    <a href="{{ url_for('module2.topic_history') }}" class="btn" style="background: #95a5a6;">View History</a>
+    <a href="{{ url_for('module1.dashboard') }}" class="btn" style="background: #27ae60;">Learn Another Topic</a>
+</div>
+
+<div class="card" style="background: #e8f5e9;">
+    <h3>Key Points Summary</h3>
+    <p>This explanation has been tailored to your <strong>{{ topic.academic_level.replace('_', ' ').title() }}</strong> level.</p>
+    <p>Created: {{ topic.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+</div>
+{% endblock %}

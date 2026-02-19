@@ -1,0 +1,21 @@
+{% extends "module1_ui/frontend/base.html" %}
+
+{% block title %}Topic History{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Your Learning History</h2>
+    {% if topics %}
+        {% for topic in topics %}
+        <div class="card" style="background: #ecf0f1; margin-top: 1rem;">
+            <h3>{{ topic.topic_name }}</h3>
+            <p><strong>Academic Level:</strong> {{ topic.academic_level.replace('_', ' ').title() }}</p>
+            <p><strong>Date:</strong> {{ topic.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+            <a href="{{ url_for('module2.view_topic', topic_id=topic.id) }}" class="btn">View Details</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No topics learned yet. Start by asking a question from the dashboard!</p>
+    {% endif %}
+</div>
+{% endblock %}

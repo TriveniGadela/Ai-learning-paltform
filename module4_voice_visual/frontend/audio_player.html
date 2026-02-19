@@ -1,0 +1,62 @@
+{% extends "module1_ui/frontend/base.html" %}
+
+{% block title %}Audio Learning - {{ topic.topic_name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🔊 Audio Learning</h2>
+    <h3>{{ topic.topic_name }}</h3>
+</div>
+
+<div class="card">
+    <div style="text-align: center; padding: 2rem;">
+        <button id="playBtn" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem;">▶️ Play Audio</button>
+        <button id="pauseBtn" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem; background: #e67e22; display: none;">⏸️ Pause</button>
+        <button id="stopBtn" class="btn" style="font-size: 1.2rem; padding: 1rem 2rem; background: #e74c3c;">⏹️ Stop</button>
+    </div>
+    
+    <div id="status" style="text-align: center; margin-top: 1rem; color: #7f8c8d;"></div>
+</div>
+
+<div class="card">
+    <h3>Explanation Text</h3>
+    <div style="line-height: 1.8; white-space: pre-wrap;">{{ topic.explanation }}</div>
+</div>
+
+<div class="card">
+    <a href="{{ url_for('module2.view_topic', topic_id=topic.id) }}" class="btn" style="background: #95a5a6;">Back to Topic</a>
+</div>
+
+<script>
+let synth = window.speechSynthesis;
+let utterance = null;
+
+document.getElementById('playBtn').addEventListener('click', function() {
+    if (synth.paused) {
+        synth.resume();
+    } else {
+        utterance = new SpeechSynthesisUtterance(`{{ topic.explanation|replace('\n', ' ')|replace('"', '\\"') }}`);
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        synth.speak(utterance);
+    }
+    document.getElementById('playBtn').style.display = 'none';
+    document.getElementById('pauseBtn').style.display = 'inline-block';
+    document.getElementById('status').textContent = 'Playing...';
+});
+
+document.getElementById('pauseBtn').addEventListener('click', function() {
+    synth.pause();
+    document.getElementById('playBtn').style.display = 'inline-block';
+    document.getElementById('pauseBtn').style.display = 'none';
+    document.getElementById('status').textContent = 'Paused';
+});
+
+document.getElementById('stopBtn').addEventListener('click', function() {
+    synth.cancel();
+    document.getElementById('playBtn').style.display = 'inline-block';
+    document.getElementById('pauseBtn').style.display = 'none';
+    document.getElementById('status').textContent = 'Stopped';
+});
+</script>
+{% endblock %}

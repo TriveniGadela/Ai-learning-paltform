@@ -1,0 +1,21 @@
+{% extends "module1_ui/frontend/base.html" %}
+
+{% block title %}{{ topic.topic_name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>{{ topic.topic_name }}</h2>
+    <p><strong>Academic Level:</strong> {{ topic.academic_level.replace('_', ' ').title() }}</p>
+    <p><strong>Date:</strong> {{ topic.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+</div>
+
+<div class="card">
+    <h3>Explanation</h3>
+    <div style="line-height: 1.6;">{{ topic.explanation|safe }}</div>
+    
+    <div style="margin-top: 2rem;">
+        <a href="{{ url_for('module4.text_to_speech', topic_id=topic.id) }}" class="btn">🔊 Listen to Explanation</a>
+        <a href="{{ url_for('module2.topic_history') }}" class="btn" style="background: #95a5a6;">Back to History</a>
+    </div>
+</div>
+{% endblock %}

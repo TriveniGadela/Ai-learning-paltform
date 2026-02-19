@@ -1,0 +1,39 @@
+{% extends "module1_ui/frontend/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Welcome back, {{ current_user.username }}! 👋</h1>
+    <p style="font-size: 1.1rem; color: #666;">Academic Level: <strong style="color: #667eea;">{{ current_user.academic_level.replace('_', ' ').title() }}</strong></p>
+</div>
+
+<div class="card">
+    <h2>💡 Learn a New Topic</h2>
+    <form action="{{ url_for('module3.generate_explanation') }}" method="POST">
+        <label>What would you like to learn today?</label>
+        <input type="text" name="topic" placeholder="e.g., Photosynthesis, Quantum Physics, Machine Learning..." required style="font-size: 1.1rem;">
+        <button type="submit" class="btn" style="margin-top: 1rem; width: 100%; font-size: 1.1rem;">Generate AI Explanation 🤖</button>
+    </form>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+    <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <h3>📚 View History</h3>
+        <p style="margin: 1rem 0;">Access all your previously learned topics</p>
+        <a href="{{ url_for('module2.topic_history') }}" class="btn" style="background: white; color: #667eea;">View History</a>
+    </div>
+    
+    <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+        <h3>👤 Update Profile</h3>
+        <p style="margin: 1rem 0;">Change your academic level settings</p>
+        <a href="{{ url_for('module2.profile') }}" class="btn" style="background: white; color: #f5576c;">Edit Profile</a>
+    </div>
+    
+    <div class="card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+        <h3>⏰ Manage Reminders</h3>
+        <p style="margin: 1rem 0;">Set reminders for consistent learning</p>
+        <a href="{{ url_for('module5.reminders') }}" class="btn" style="background: white; color: #00f2fe;">Reminders</a>
+    </div>
+</div>
+{% endblock %}

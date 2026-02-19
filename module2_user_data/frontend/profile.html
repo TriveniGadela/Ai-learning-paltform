@@ -1,0 +1,27 @@
+{% extends "module1_ui/frontend/base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Your Profile</h2>
+    <p><strong>Username:</strong> {{ current_user.username }}</p>
+    <p><strong>Email:</strong> {{ current_user.email }}</p>
+    <p><strong>Member Since:</strong> {{ current_user.created_at.strftime('%B %d, %Y') }}</p>
+</div>
+
+<div class="card">
+    <h2>Update Academic Level</h2>
+    <form method="POST">
+        <label>Academic Level</label>
+        <select name="academic_level">
+            <option value="elementary" {% if current_user.academic_level == 'elementary' %}selected{% endif %}>Elementary School</option>
+            <option value="middle_school" {% if current_user.academic_level == 'middle_school' %}selected{% endif %}>Middle School</option>
+            <option value="high_school" {% if current_user.academic_level == 'high_school' %}selected{% endif %}>High School</option>
+            <option value="undergraduate" {% if current_user.academic_level == 'undergraduate' %}selected{% endif %}>Undergraduate</option>
+            <option value="graduate" {% if current_user.academic_level == 'graduate' %}selected{% endif %}>Graduate</option>
+        </select>
+        <button type="submit" class="btn" style="margin-top: 1rem;">Update Profile</button>
+    </form>
+</div>
+{% endblock %}

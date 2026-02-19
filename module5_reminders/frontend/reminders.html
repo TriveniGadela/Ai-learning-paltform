@@ -1,0 +1,44 @@
+{% extends "module1_ui/frontend/base.html" %}
+
+{% block title %}Learning Reminders{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📅 Learning Reminders</h2>
+    <p>Set reminders to maintain consistent learning habits.</p>
+</div>
+
+<div class="card">
+    <h3>Create New Reminder</h3>
+    <form method="POST" action="{{ url_for('module5.add_reminder') }}">
+        <label>Reminder Message</label>
+        <input type="text" name="message" placeholder="e.g., Review Photosynthesis notes" required>
+        
+        <label>Date</label>
+        <input type="date" name="scheduled_date" required>
+        
+        <label>Time</label>
+        <input type="time" name="scheduled_time" required>
+        
+        <button type="submit" class="btn" style="margin-top: 1rem;">Create Reminder</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>Your Reminders</h3>
+    {% if reminders %}
+        {% for reminder in reminders %}
+        <div class="card" style="background: {% if reminder.is_sent %}#d5f4e6{% else %}#fff3cd{% endif %}; margin-top: 1rem;">
+            <p><strong>{{ reminder.message }}</strong></p>
+            <p>Scheduled: {{ reminder.scheduled_time.strftime('%B %d, %Y at %I:%M %p') }}</p>
+            <p>Status: {% if reminder.is_sent %}✅ Sent{% else %}⏳ Pending{% endif %}</p>
+            <a href="{{ url_for('module5.delete_reminder', reminder_id=reminder.id) }}" 
+               class="btn" style="background: #e74c3c;" 
+               onclick="return confirm('Delete this reminder?')">Delete</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No reminders set. Create one to stay on track with your learning!</p>
+    {% endif %}
+</div>
+{% endblock %}
